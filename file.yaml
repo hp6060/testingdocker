@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: submit-answer-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: submit-answer-app
+  template:
+    metadata:
+      labels:
+        app: submit-answer-app
+    spec:
+      containers:
+      - name: node-container
+        image: hariprasath7676/submit-answer-app:latest
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: submit-answer-app-service
+spec:
+  selector:
+    app: submit-answer-app
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: NodePort
